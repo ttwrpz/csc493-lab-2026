@@ -1,15 +1,8 @@
 #!/bin/bash
-# Task 1.3 -- traceroute with Scapy (count routers to a destination).
-# Run from ~/SeedLabs/Sniffing_Spoofing/ :  ./task1_3.sh [dst]
-set -u
-cd "$(dirname "$0")" || exit 1
-
+# Task 1.3 -- Scapy traceroute (SEED manual style): set the TTL, send one ICMP packet.
+# Bump the TTL and run again; watch the reply with Wireshark or tcpdump.
+# usage: ./task1_3.sh <ttl>      e.g. ./task1_3.sh 3
 read -p "Enter weekly code (e.g. WK01-ASDK): " WK
-
-DST="${1:-8.8.8.8}"
-echo "Tracing route to $DST"
-echo
-sudo python3 traceroute.py "$DST"
-
-echo
+cd "$(dirname "$0")"
+sudo python3 traceroute.py "${1:-1}"
 echo "$WK"
