@@ -8,7 +8,8 @@ read -p "Enter weekly code (e.g. WK01-ASDK): " WK
 
 wk() {
   local G=$'\033[01;32m' B=$'\033[01;34m' R=$'\033[00m'
-  printf '[%s]%s%s@%s%s:%s%s%s$ echo %s\n' "$(date +%D)" "$G" "$(whoami)" "$(hostname)" "$R" "$B" "${PWD/#$HOME/~}" "$R" "$WK"
+  local dir="$PWD"; [ "${dir#$HOME}" != "$dir" ] && dir="~${dir#$HOME}"
+  printf '[%s]%s%s@%s%s:%s%s%s$ echo %s\n' "$(date +%D)" "$G" "$(whoami)" "$(hostname)" "$R" "$B" "$dir" "$R" "$WK"
   echo "$WK"
 }
 
