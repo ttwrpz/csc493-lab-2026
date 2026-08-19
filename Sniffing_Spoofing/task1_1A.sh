@@ -8,27 +8,20 @@ read -p "Enter weekly code (e.g. WK01-ASDK): " WK
 
 IFACE=$(ip -o -4 addr show | awk '$4 ~ /^10\.9\.0\.1\// {print $2; exit}')
 if [ -z "${IFACE:-}" ]; then
-  echo "!! Could not find the 10.9.0.1 bridge. Is 'dcup' running?"; exit 1
+  echo "bridge 10.9.0.1 not found, is dcup running?"; exit 1
 fi
 HOSTA=$(docker ps -qf "name=hostA")
-echo "Interface: $IFACE   hostA container: ${HOSTA:-<not found>}"
+echo "Interface: $IFACE   hostA container: ${HOSTA:-not found}"
 echo
 
-echo "=================================================="
-echo " [1/2] Sniff WITHOUT root  ->  expected to FAIL"
-echo "=================================================="
+echo "[1/2] Sniff without root (expected to fail)"
 python3 sniffer.py "$IFACE" icmp 5
-echo "   (exit status: $?  -- permission denied means the demo worked)"
+echo "exit status: $?"
 echo
 
-echo "=================================================="
-echo " [2/2] Sniff WITH root (sudo)  ->  should capture"
-echo "=================================================="
+echo "[2/2] Sniff with root (sudo)"
 ( sleep 2; docker exec "$HOSTA" ping -c 3 10.9.0.6 >/dev/null 2>&1 ) &
 sudo python3 sniffer.py "$IFACE" icmp 8
 
 echo
-echo "=================================================="
-echo " Task 1.1A done.     Weekly code: $WK"
-echo "=================================================="
 echo "$WK"
