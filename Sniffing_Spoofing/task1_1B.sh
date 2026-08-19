@@ -1,10 +1,16 @@
 #!/bin/bash
 # Task 1.1B -- capturing packets with BPF filters
-# Run from ~/SeedLabs/Sniffing_Spoofing/ :  ./task1_1B.sh
+# Run from ~/csc493-lab-2026/Sniffing_Spoofing/ :  ./task1_1B.sh
 set -u
 cd "$(dirname "$0")" || exit 1
 
 read -p "Enter weekly code (e.g. WK01-ASDK): " WK
+
+wk() {
+  local G=$'\033[01;32m' B=$'\033[01;34m' R=$'\033[00m'
+  printf '[%s]%s%s@%s%s:%s%s%s$ echo %s\n' "$(date +%D)" "$G" "$(whoami)" "$(hostname)" "$R" "$B" "${PWD/#$HOME/~}" "$R" "$WK"
+  echo "$WK"
+}
 
 IFACE=$(ip -o -4 addr show | awk '$4 ~ /^10\.9\.0\.1\// {print $2; exit}')
 if [ -z "${IFACE:-}" ]; then
@@ -19,7 +25,7 @@ run_filter () {   # $1=title  $2=bpf-filter  $3=traffic-command
   echo "filter = $2"
   ( sleep 2; eval "$3" >/dev/null 2>&1 ) &
   sudo python3 sniffer.py "$IFACE" "$2" 10
-  echo "$WK"
+  wk
 }
 
 run_filter "Filter 1: ICMP only" \
