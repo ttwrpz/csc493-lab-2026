@@ -1,0 +1,70 @@
+# AI / Agent Files
+CLAUDE.md
+AGENTS.md
+
+
+# Text & Archive Files
+*.txt
+*.zip
+
+
+# AI Tool & Agent Directories
+.claude/
+.cursor/
+.copilot/
+.aider*
+.continue/
+
+
+# Temporary Files
+.ai/
+.ai-cache/
+ai-output/
+generated/
+*.generated.*
+*.prompt
+*.prompts
+
+
+# Local Environment & Secrets
+.env
+.env.*
+!.env.example
+
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Models & ML Artifacts
+*.ckpt
+*.pth
+*.pt
+*.onnx
+*.safetensors
+*.h5
+
+# Datasets & Large Generated Data
+*.parquet
+*.arrow
+
+# Logs & Temporary Files
+*.log
+.cache/
+tmp/
+temp/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
