@@ -13,8 +13,9 @@ wk() {
   echo "$WK"
 }
 
-docker exec B-10.9.0.6 arp -d 10.9.0.5 2>/dev/null
+docker exec B-10.9.0.6 ip neigh del 10.9.0.5 dev eth0 2>/dev/null
 docker exec B-10.9.0.6 ping -c 1 10.9.0.5 >/dev/null 2>&1
+docker exec B-10.9.0.6 ip neigh change 10.9.0.5 nud stale dev eth0 2>/dev/null
 echo "B's ARP cache before attack (10.9.0.5 = A's real MAC 02:42:0a:09:00:05):"
 docker exec B-10.9.0.6 arp -n
 
