@@ -8,7 +8,7 @@ AGENTS.md
 *.zip
 
 # SEED lab environment (re-downloadable, not our code)
-Sniffing_Spoofing/Labsetup/
+Labsetup/
 
 
 # AI Tool & Agent Directories
