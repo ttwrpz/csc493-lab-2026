@@ -13,16 +13,16 @@ wk() {
   echo "$WK"
 }
 
-docker exec A-10.9.0.5 ping -c 1 10.9.0.6 >/dev/null 2>&1
+docker exec B-10.9.0.6 arp -d 10.9.0.5 2>/dev/null
 docker exec B-10.9.0.6 ping -c 1 10.9.0.5 >/dev/null 2>&1
-echo "A's and B's ARP caches before attack (real MACs):"
-docker exec A-10.9.0.5 arp -n; echo; docker exec B-10.9.0.6 arp -n
+echo "B's ARP cache before attack (10.9.0.5 = A's real MAC 02:42:0a:09:00:05):"
+docker exec B-10.9.0.6 arp -n
 
 echo
 echo "M broadcasts a gratuitous ARP (10.9.0.5 is at M's MAC):"
 docker exec -i M-10.9.0.105 python3 - < arp_gratuitous.py
 
 echo
-echo "Caches after attack (10.9.0.5 should now be M's MAC 02:42:0a:09:00:69 where an entry existed):"
-docker exec A-10.9.0.5 arp -n; echo; docker exec B-10.9.0.6 arp -n
+echo "B's ARP cache after attack (10.9.0.5 should now be M's MAC 02:42:0a:09:00:69):"
+docker exec B-10.9.0.6 arp -n
 wk
