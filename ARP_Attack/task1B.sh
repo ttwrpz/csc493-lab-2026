@@ -21,6 +21,7 @@ docker exec B-10.9.0.6 arp -n
 
 echo
 echo "M sends a spoofed ARP reply (10.9.0.5 is at M's MAC) to B:"
+sleep 2   # let B's entry age past the ARP locktime (~1s) so the reply can override it
 docker exec -i M-10.9.0.105 python3 - < arp_reply.py
 
 echo
