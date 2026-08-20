@@ -14,7 +14,8 @@ NEW = sys.argv[2].encode() if len(sys.argv) > 2 else None
 def modify(data):
     if OLD is not None:
         return data.replace(OLD, NEW)
-    return b'Z' * len(data)
+    # telnet: replace typed letters with 'Z', keep control/negotiation bytes intact
+    return bytes(90 if (65 <= c <= 90 or 97 <= c <= 122) else c for c in data)
 
 def relay(pkt):
     if IP not in pkt or TCP not in pkt:
